@@ -21,12 +21,17 @@ namespace LoaderWHichWIllWork {
                 listBox1.Items.Add(proc.ProcessName);
             }
         }
-        
         private void listBox1_DoubleClick(object sender, EventArgs e) {
-            if(listBox1.SelectedItem != null) {
+            if (listBox1.SelectedItem != null) {
                 DllInjectionResult result = DllInjector.GetInstance.Inject(listBox1.SelectedItem.ToString(), Directory.GetCurrentDirectory() + "\\Titanium.dll");
-                File.WriteAllText("GameInjectedInto", listBox1.SelectedItem.ToString());
-                if(result == DllInjectionResult.Success) {
+                string TempConfigFile = Path.Combine(Path.GetTempPath(), "Selected.Frosty");
+                using (StreamWriter sw = new StreamWriter(TempConfigFile)) {
+
+
+
+                    sw.Write(listBox1.SelectedItem.ToString());
+                }
+                if (result == DllInjectionResult.Success) {
                     Application.Exit();
                 }
             }
